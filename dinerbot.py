@@ -32,7 +32,7 @@ def back(bot, update):
     
     reply_markup = telegram.ReplyKeyboardMarkup(Constants.filter_choice_menu, one_time_keyboard=True)
    #update.message.reply_text("How would you like to filter your restaurant suggestions?", reply_markup=reply_markup)
-    update.message.reply_text('Type /done if you\'re finished else pick the filter of your choice !',reply_markup=reply_markup)
+    update.message.reply_text('Choose the filter preference',reply_markup=reply_markup)
     return SUGGEST
 
 def get_location(bot, update):
@@ -48,12 +48,14 @@ def get_location(bot, update):
 
 
 def suggest(bot, update):
+    print("s")
     response = update.message.text
     bot.send_chat_action(chat_id=update.message.chat_id,action=telegram.ChatAction.TYPING)
    # print(response)
     if response == 'Price & Rating':
         reply_markup = telegram.ReplyKeyboardMarkup(Constants.price_choice_menu, one_time_keyboard=True)
         update.message.reply_text("Choose your price point", reply_markup=reply_markup)
+        print("s")
         return PRICE
     elif response == 'Cuisine':
         reply_markup = telegram.ReplyKeyboardMarkup(cuisine_list, one_time_keyboard=True)
@@ -67,6 +69,7 @@ def suggest(bot, update):
 
 def price(bot, update):
     response = update.message.text
+   
     #print(response)
     price_range = 2
     if response == '$':
@@ -81,7 +84,8 @@ def price(bot, update):
     lat, long, title, address = zomato.search_by_price(price_range)
     update.message.reply_text('Here are the top rated places within your budget')
     send_venue(bot, update, lat, long, title, address)
-    back(bot,update)
+    update.message.reply_text('Type /done if you\'re finished else type "back" to choose another preference !')
+    return BACK
 
 def cuisine(bot, update):
     response = update.message.text
@@ -92,7 +96,8 @@ def cuisine(bot, update):
     else:
         update.message.reply_text('Here are nearby places serving {} cuisine'.format(response.title()))
         send_venue(bot, update, lat, long, title, address)
-    back(bot,update)
+    update.message.reply_text('Type /done if you\'re finished else type "back" to choose another preference !')
+    return BACK
 
 def query(bot, update):
     response = update.message.text
@@ -100,7 +105,8 @@ def query(bot, update):
     lat, long, title, address = zomato.search_by_query(response)    
     update.message.reply_text('Here are nearby places serving {}'.format(response.lower()))
     send_venue(bot, update, lat, long, title, address)
-    back(bot,update)
+    update.message.reply_text('Type /done if you\'re finished else type "back" to choose another preference !')
+    return BACK
 
 def send_venue(bot, update, lat, long, title, address):
     if len(lat) == 0:
@@ -124,7 +130,7 @@ def error(bot, update, error):
 
 
 def main():
-    updater = Updater('491326980:AAEAG7Q0nBiqMSb1Ln7qqdhAGw6_SZJUfMA')
+    updater = Updater('532117580:AAGVVzgLp-r1OLEvY8eWJnfVi-53MJcdL3Q')
 
     dp = updater.dispatcher
 
