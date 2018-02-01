@@ -1,1 +1,1 @@
-worker:python dinerbot.py
+worker: python dinerbot.py
