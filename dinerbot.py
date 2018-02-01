@@ -130,7 +130,7 @@ def error(bot, update, error):
 
 
 def main():
-    updater = Updater("API_KEY_TELEGRAM_BOT")
+    updater = Updater("491326980:AAEAG7Q0nBiqMSb1Ln7qqdhAGw6_SZJUfMA")
 
     dp = updater.dispatcher
 
