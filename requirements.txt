@@ -4,5 +4,5 @@ python-telegram-bot==9.0.0
 pyzomato==0.5
 telegram==0.0.1
 requests>=2.20.0
-httplib2==0.10.3
+httplib2==0.19.0
 urllib3==1.22
